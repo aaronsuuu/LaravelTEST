@@ -1,36 +1,37 @@
 @extends('template.application')
 @section('main')
     <div class="container-fluid mx-2 my-2">
-        <h3 class="text-bold text-primary">顧客管理</h3>
+        <h3 class="text-bold text-primary">產品管理</h3>
         <div class="row">
             <div class="col-12">
                 @if (session()->has('notice'))
                 <div class="alert alert-success" role="alert">{{ session()->get('notice'); }}</div>
                 @endif
-                <a class="btn btn-sm btn-primary" href="{{ route('customer.create') }}">新增顧客</a>
+                <a class="btn btn-sm btn-primary" href="{{ route('product.create') }}">新增產品</a>
                 <hr>
                 <table class="table table-striped table-hover">
                     <thead class="table-primary">
                         <th>#</th>
-                        <th>顧客名稱</th>
-                        <th>電話</th>
-                        <th>地址</th>
+                        <th>產品名稱</th>
+                        <th>進貨價</th>
+                        <th>供應商</th>
+                        <th>庫存</th>
                         <th>操作</th>
                     </thead>
                     <tbody>
-                        @foreach ($customers as $customer)
+                        @foreach ($products as $product)
                             <tr>
                                 <td>{{$loop->index+1}}</td>
-                                <td>{{$customer->name}}</td>
-                                <td>{{$customer->phone}}</td>
-                                <td>{{$customer->address}}</td>
+                                <td>{{$product->name}}</td>
+                                <td>{{$product->price}}</td>
+                                <td>{{$product->supplier->name}}</td>
+                                <td>{{$product->inventory->quantity}}</td>
                                 <td>
-                                    <a class="btn btn-warning btn-sm mx-1 my-1" href="{{ route('customer.edit', $customer) }}">編輯</a>
-                                    {{-- <a class="btn btn-danger mx-1 my-1" id="delete" href="{{ route('customer.destroy', $customer) }}">刪除</a> --}}
-                                    <form class="d-inline" action="{{route('customer.destroy', $customer)}}" method="post" id="delete_form">
+                                    <a class="btn btn-warning btn-sm mx-1 my-1" href="{{ route('product.edit', $product) }}">編輯</a>
+                                    <form class="d-inline" action="{{route('product.destroy', $product)}}" method="post" id="delete_form">
                                         @csrf
                                         @method('delete')
-                                        <button class="btn btn-danger btn-sm mx-1 my-1" type="submit">刪除</button>
+                                        <button class="btn btn-danger btn-sm" type="submit">刪除</button>
                                     </form>
                                 </td>
                             </tr>

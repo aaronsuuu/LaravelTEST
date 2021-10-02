@@ -1,33 +1,40 @@
 @extends('template.application')
 @section('main')
     <div class="container-fluid mx-2 my-2">
-        <h3 class="text-bold text-primary">顧客管理</h3>
+        <h3 class="text-bold text-primary">訂單管理</h3>
         <div class="row">
             <div class="col-12">
                 @if (session()->has('notice'))
                 <div class="alert alert-success" role="alert">{{ session()->get('notice'); }}</div>
                 @endif
-                <a class="btn btn-sm btn-primary" href="{{ route('customer.create') }}">新增顧客</a>
+                <a class="btn btn-sm btn-primary" href="{{ route('order.create') }}">新增訂單</a>
                 <hr>
-                <table class="table table-striped table-hover">
+                <table class="table table-sm table-striped table-hover">
                     <thead class="table-primary">
                         <th>#</th>
-                        <th>顧客名稱</th>
-                        <th>電話</th>
-                        <th>地址</th>
+                        <th>訂貨日期</th>
+                        <th>客戶名稱</th>
+                        <th>貨運狀態</th>
                         <th>操作</th>
                     </thead>
                     <tbody>
-                        @foreach ($customers as $customer)
+                        @foreach ($orders as $order)
                             <tr>
                                 <td>{{$loop->index+1}}</td>
-                                <td>{{$customer->name}}</td>
-                                <td>{{$customer->phone}}</td>
-                                <td>{{$customer->address}}</td>
                                 <td>
-                                    <a class="btn btn-warning btn-sm mx-1 my-1" href="{{ route('customer.edit', $customer) }}">編輯</a>
-                                    {{-- <a class="btn btn-danger mx-1 my-1" id="delete" href="{{ route('customer.destroy', $customer) }}">刪除</a> --}}
-                                    <form class="d-inline" action="{{route('customer.destroy', $customer)}}" method="post" id="delete_form">
+                                    <a href="{{route('order.show', ['order' => $order])}}">{{$order->ordered_date}}</a>
+                                </td>
+                                <td>{{$order->customer->name}}</td>
+                                <td>
+                                    @if ($order->is_done)
+                                        <button class="btn btn-sm btn-success" type="button">已送</button>
+                                    @else
+                                        <button class="btn btn-sm btn-danger" type="button">未送</button>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning btn-sm mx-1 my-1" href="{{ route('order.edit', $order) }}">編輯</a>
+                                    <form class="d-inline" action="{{route('order.destroy', $order)}}" method="post" id="delete_form">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-danger btn-sm mx-1 my-1" type="submit">刪除</button>

@@ -11,7 +11,15 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public function customer(){
-        return $this->belongsToMany('App\Models\Customer');
+    public function orderItems(){
+        return $this->hasMany('App\Models\OrderItem');
+    }
+
+    public function supplier(){
+        return $this->belongsTo('App\Models\Supplier');
+    }
+
+    public function inventory(){
+        return $this->hasOne('App\Models\Inventory');
     }
 }

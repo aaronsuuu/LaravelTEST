@@ -75,7 +75,8 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Customer::find($id);
+        return view('pages.customer.edit', ["customer" => $customer]);
     }
 
     /**
@@ -87,7 +88,17 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $content = $request->validate([
+            'name'=>'required',
+            'phone'=>'required|min:8|numeric',
+            'address'=>'required',
+        ]);
+        $customer = Customer::find($id);
+        $customer->name = $content['name'];
+        $customer->phone = $content['phone'];
+        $customer->address = $content['address'];
+        $customer->save();
+        return redirect()->route('customer.index')->with('notice', '顧客資料更新成功');
     }
 
     /**
@@ -98,6 +109,8 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $customer = Customer::find($id);
+        $customer->delete();
+        return redirect()->route('customer.index')->with('notice', '顧客資料刪除成功');
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-09-08 09:24:34
+-- 產生時間： 2021-10-02 05:16:55
 -- 伺服器版本： 10.4.19-MariaDB
 -- PHP 版本： 7.4.20
 
@@ -84,6 +84,32 @@ CREATE TABLE `customers` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- 傾印資料表的資料 `customers`
+--
+
+INSERT INTO `customers` (`id`, `name`, `phone`, `address`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(5, '蘇健霖', '0916567470', '中和路168巷10弄32號', '2021-09-14 23:27:03', '2021-09-15 00:27:48', '2021-09-15 00:27:48'),
+(6, '蘇健霖', '0916567470', '中和路168巷10弄32號', '2021-09-15 00:27:58', '2021-09-15 00:28:08', NULL),
+(7, '陳漢霖', '0922410237', '基隆市', '2021-09-15 00:37:52', '2021-09-15 00:37:52', NULL),
+(8, '雙式冰業', '26429767', '新北市汐止區大同路一段339號之1', '2021-09-24 02:34:05', '2021-09-24 02:34:05', NULL),
+(9, '蘇健霖', '24376608', '中和路168巷10弄32號', '2021-09-28 20:01:02', '2021-09-28 20:01:08', '2021-09-28 20:01:08');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `customer_prices`
+--
+
+CREATE TABLE `customer_prices` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `customer` int(11) NOT NULL,
+  `product` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -114,6 +140,34 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `inventories`
+--
+
+CREATE TABLE `inventories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `inventories`
+--
+
+INSERT INTO `inventories` (`id`, `product_id`, `quantity`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(3, 10, 0, '2021-09-29 00:13:05', '2021-09-29 00:13:15', '2021-09-29 00:13:15'),
+(4, 11, 0, '2021-09-29 00:15:27', '2021-09-29 00:15:27', NULL),
+(5, 12, 0, '2021-09-29 02:19:40', '2021-09-29 02:19:40', NULL),
+(6, 13, 0, '2021-09-30 21:25:55', '2021-09-30 21:25:55', NULL),
+(7, 14, 0, '2021-09-30 21:26:09', '2021-09-30 21:26:09', NULL),
+(8, 15, 0, '2021-09-30 21:26:27', '2021-09-30 21:26:27', NULL),
+(9, 16, 0, '2021-09-30 21:26:47', '2021-09-30 21:26:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -149,7 +203,88 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2019_12_14_000001_create_personal_access_tokens_table', 11),
 (20, '2021_09_04_084720_create_sessions_table', 11),
 (21, '2021_09_06_064822_add_facebook_id_to_users', 12),
-(22, '2021_09_08_065430_create_constellations', 13);
+(22, '2021_09_08_065430_create_constellations', 13),
+(23, '2021_09_15_093610_add_purchase_price_to_products', 14),
+(24, '2021_09_16_074723_create_orders_table', 15),
+(25, '2021_09_16_104937_add_no_to_order', 16),
+(26, '2021_09_22_065847_add_price_to_orders', 17),
+(27, '2021_09_22_070216_add_default_value_to_orders', 18),
+(28, '2021_09_24_071645_drop_columns_from_orders', 19),
+(29, '2021_09_24_072419_move_is_done_before_created_at_from_orders', 20),
+(30, '2021_09_24_072701_create_order_items_table', 21),
+(31, '2021_09_24_081126_drop_order_no_from_orders', 22),
+(32, '2021_09_24_081828_change_column_from_orders', 23),
+(33, '2021_09_28_072119_create_suppliers_table', 24),
+(34, '2021_09_28_072411_create_purchases_table', 25),
+(35, '2021_09_28_072719_create_purchase_items_table', 26),
+(36, '2021_09_28_100330_create_customer_prices_table', 27),
+(37, '2021_09_28_100455_create_supplier_prices_table', 28),
+(38, '2021_09_28_100623_create_inventories_table', 29),
+(39, '2021_09_28_100802_add_supplier_to_products', 30),
+(40, '2021_09_28_101151_rename_purchase_time_from_purchase', 31),
+(41, '2021_09_28_101643_rename_column_from_products', 32),
+(42, '2021_09_29_071330_rename_supplier_from_products', 33),
+(43, '2021_09_29_071642_rename_table_supplier_to_products', 34),
+(44, '2021_09_29_073946_rename_product_from_inventories', 35),
+(45, '2021_09_29_074245_add_default_value_to_inventories', 36),
+(46, '2021_09_29_080546_change_default_from_inventories', 37),
+(47, '2021_09_29_104456_rename_column_supplier_from_purchases', 38),
+(48, '2021_10_01_061301_set_default_value_to_is_done_from_purchases', 39),
+(49, '2021_10_01_071953_raname_column_from_purchase_items', 40),
+(50, '2021_10_01_082353_add_price_to_purchase_items', 41);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `ordered_date` date NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `is_done` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `orders`
+--
+
+INSERT INTO `orders` (`id`, `ordered_date`, `customer_id`, `created_at`, `updated_at`, `deleted_at`, `is_done`) VALUES
+(9, '2021-09-25', 6, '2021-09-24 01:21:00', '2021-09-24 01:21:00', NULL, 0),
+(10, '2021-10-01', 7, '2021-09-24 01:26:06', '2021-09-30 22:20:49', '2021-09-30 22:20:49', 0),
+(11, '2021-09-25', 8, '2021-09-24 02:34:22', '2021-09-24 02:34:22', NULL, 0),
+(12, '2021-09-30', 8, '2021-09-29 02:20:05', '2021-09-29 02:20:05', NULL, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `price`, `quantity`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(8, 9, 2, 60, 100, '2021-09-24 01:21:00', '2021-09-24 01:21:00', NULL),
+(9, 9, 3, 25, 100, '2021-09-24 01:21:00', '2021-09-24 01:21:00', NULL),
+(14, 11, 3, 25, 200, '2021-09-24 02:34:22', '2021-09-24 02:34:22', NULL),
+(15, 12, 12, 25, 200, '2021-09-29 02:20:05', '2021-09-29 02:20:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -199,8 +334,70 @@ CREATE TABLE `products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `price` int(11) NOT NULL,
+  `supplier_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `products`
+--
+
+INSERT INTO `products` (`id`, `created_at`, `updated_at`, `name`, `deleted_at`, `price`, `supplier_id`) VALUES
+(10, '2021-09-29 00:13:05', '2021-09-29 00:13:15', '芝麻湯圓', '2021-09-29 00:13:15', 200, 2),
+(11, '2021-09-29 00:15:27', '2021-09-29 00:15:27', '芝麻湯圓', NULL, 200, 2),
+(12, '2021-09-29 02:19:40', '2021-09-29 02:19:40', '冰塊七公斤', NULL, 10, 4),
+(13, '2021-09-30 21:25:55', '2021-09-30 21:25:55', '冷凍獅子頭', NULL, 300, 3),
+(14, '2021-09-30 21:26:09', '2021-09-30 21:26:09', '花生湯圓', NULL, 200, 2),
+(15, '2021-09-30 21:26:27', '2021-09-30 21:26:27', '冰塊九公斤', NULL, 10, 4),
+(16, '2021-09-30 21:26:47', '2021-09-30 21:26:47', '芝麻包子', NULL, 100, 3);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `purchases`
+--
+
+CREATE TABLE `purchases` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `supplier_id` int(11) NOT NULL,
+  `is_done` tinyint(1) NOT NULL DEFAULT 0,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `purchases`
+--
+
+INSERT INTO `purchases` (`id`, `date`, `supplier_id`, `is_done`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(5, '2021-10-01', 2, 0, NULL, '2021-10-01 01:03:18', '2021-10-01 01:03:18');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `purchase_items`
+--
+
+CREATE TABLE `purchase_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `purchase_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `purchase_items`
+--
+
+INSERT INTO `purchase_items` (`id`, `purchase_id`, `product_id`, `quantity`, `created_at`, `updated_at`, `price`) VALUES
+(5, 5, 11, 10, '2021-10-01 01:03:18', '2021-10-01 01:03:18', 150),
+(6, 5, 14, 15, '2021-10-01 01:03:18', '2021-10-01 01:03:18', 100);
 
 -- --------------------------------------------------------
 
@@ -222,7 +419,47 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('6xYJvqDlhuqzQuZbgW6OsQChVNNGjTkkFCU46PxK', 1, '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoieTZPR05uQXVkdEFmMGJTZWdkUU1rbXpQN0lTY05PRm9xZ0lNbGxKVCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJE9GS0ZYMjFDaWdLaGJ0aVNWaGpkNy5jLjlrSDRsRHFRbFV2cmN6eHMzNS84TVZsY2JaaE4uIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRPRktGWDIxQ2lnS2hidGlTVmhqZDcuYy45a0g0bERxUWxVdnJjenhzMzUvOE1WbGNiWmhOLiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9jdXN0b21lciI7fXM6NToic3RhdGUiO3M6NDA6InZNdThLcGtZVEtkbGF3eThDNEgwbUZndzhsQ0Q3THZlT09MOXZUMVUiO30=', 1631011075);
+('NGxiraplf2EvGuALXNdssgJ61Ubqh1EeSkZYf0PD', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoielRPSm5oN0IzenJwVVo4RVEwaG1Jcm1HYmc1N0haa0s3b2UxaG16aSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM3OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvcHVyY2hhc2UvNS9lZGl0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJE9GS0ZYMjFDaWdLaGJ0aVNWaGpkNy5jLjlrSDRsRHFRbFV2cmN6eHMzNS84TVZsY2JaaE4uIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRPRktGWDIxQ2lnS2hidGlTVmhqZDcuYy45a0g0bERxUWxVdnJjenhzMzUvOE1WbGNiWmhOLiI7fQ==', 1633082279);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `suppliers`
+--
+
+CREATE TABLE `suppliers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `name`, `phone`, `address`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(2, '桂冠實業股份有限公司', '0223210335', '臺北市中正區羅斯福路3段126號1樓', '2021-09-28 21:28:53', '2021-09-28 21:28:53', NULL),
+(3, '義美食品股份有限公司', '0223519211', '臺北市大同區延平北路2段31號1樓', '2021-09-28 22:57:15', '2021-09-28 22:57:15', NULL),
+(4, '漢霖商行', '0212345678', '中和路168巷10弄32號', '2021-09-29 02:18:59', '2021-09-29 02:29:44', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `supplier_prices`
+--
+
+CREATE TABLE `supplier_prices` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `supplier` int(11) NOT NULL,
+  `product` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -249,7 +486,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `facebook_id`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Aaron', 'small12112000@gmail.com', NULL, '$2y$10$OFKFX21CigKhbtiSVhjd7.c.9kH4lDqQlUvrczxs35/8MVlcbZhN.', NULL, NULL, NULL, NULL, '2021-09-05 22:35:43', '2021-09-05 22:35:43');
+(1, 'Aaron', 'small12112000@gmail.com', NULL, '$2y$10$OFKFX21CigKhbtiSVhjd7.c.9kH4lDqQlUvrczxs35/8MVlcbZhN.', NULL, NULL, NULL, 'SiLxNgTxKHo0pmhq7749nV6OXodRotxzoNxdd3ML7lEOkoVqnqvK9Dh0GIH4', '2021-09-05 22:35:43', '2021-09-05 22:35:43');
 
 --
 -- 已傾印資料表的索引
@@ -268,6 +505,12 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 資料表索引 `customer_prices`
+--
+ALTER TABLE `customer_prices`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 資料表索引 `customer_product`
 --
 ALTER TABLE `customer_product`
@@ -281,9 +524,27 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- 資料表索引 `inventories`
+--
+ALTER TABLE `inventories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 資料表索引 `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 資料表索引 `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 資料表索引 `order_items`
+--
+ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -307,12 +568,36 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 資料表索引 `purchases`
+--
+ALTER TABLE `purchases`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 資料表索引 `purchase_items`
+--
+ALTER TABLE `purchase_items`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 資料表索引 `sessions`
 --
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sessions_user_id_index` (`user_id`),
   ADD KEY `sessions_last_activity_index` (`last_activity`);
+
+--
+-- 資料表索引 `suppliers`
+--
+ALTER TABLE `suppliers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 資料表索引 `supplier_prices`
+--
+ALTER TABLE `supplier_prices`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- 資料表索引 `users`
@@ -335,7 +620,13 @@ ALTER TABLE `constellations`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `customer_prices`
+--
+ALTER TABLE `customer_prices`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `customer_product`
@@ -350,10 +641,28 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `inventories`
+--
+ALTER TABLE `inventories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `personal_access_tokens`
@@ -365,6 +674,30 @@ ALTER TABLE `personal_access_tokens`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `products`
 --
 ALTER TABLE `products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `purchases`
+--
+ALTER TABLE `purchases`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `purchase_items`
+--
+ALTER TABLE `purchase_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `suppliers`
+--
+ALTER TABLE `suppliers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `supplier_prices`
+--
+ALTER TABLE `supplier_prices`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
