@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderItems;
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
@@ -33,10 +34,12 @@ class OrderController extends Controller
     {
         $customers = Customer::all();
         $products = Product::all();
+        $suppliers = Supplier::all();
         return view('pages.order.create',
             [
                 "customers" => $customers,
                 "products" => $products,
+                "suppliers" => $suppliers
             ]);
     }
 

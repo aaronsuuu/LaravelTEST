@@ -1,7 +1,7 @@
 @extends('template.application')
 @section('main')
     <div class="container mx-2 my-2">
-        <h3 class="text-bold text-primary">訂單內容</h3>
+        <h3 class="text-bold text-primary"><a href="{{route('order.index')}}">訂單管理</a> > 訂單內容</h3>
         <div class="row">
             <div class="col-8">
                 {{-- @if (session()->has('notice'))

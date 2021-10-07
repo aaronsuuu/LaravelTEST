@@ -66,6 +66,9 @@ class PurchaseController extends Controller
                 $item->product_id = $product_ids[$i];
                 $item->quantity = $quantities[$i];
                 $item->price = $prices[$i];
+
+                $item->product->inventory->quantity += $item->quantity;
+                $item->product->inventory->save();
                 $item->save();
             }
             return redirect()->route('purchase.index')->with('notice', '進貨單資料新增成功');
@@ -84,7 +87,8 @@ class PurchaseController extends Controller
      */
     public function show($id)
     {
-        //
+        $purchase = Purchase::find($id);
+        return view('pages.purchase.show', ['purchase' => $purchase]);
     }
 
     /**
@@ -109,7 +113,51 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $id;
+        try{
+            $content = $request->validate([
+                'date' => 'required',
+                'supplier' => 'required',
+                'product_id' => 'required',
+                'quantity' => 'required|min:1',
+                'price' => 'required|min:0'
+            ]);
+            // return json_encode($request->product_id);
+            $purchase = Purchase::find($id);
+
+            if($purchase->purchaseItems){
+                foreach($purchase->purchaseItems as $item){
+                    $item->product->inventory->quantity -= $item->quantity;
+                    $item->product->inventory->save();
+                }
+                $purchase->purchaseItems()->delete();
+            }
+
+            $purchase->supplier_id = $content['supplier'];
+            $purchase->date = $content['date'];
+            $purchase->save();
+
+            $product_ids = $request->get('product_id');
+            $quantities = $request->get('quantity');
+            $prices = $request->get('price');
+
+            for ($i=0; $i < count($product_ids); $i++) {
+                $item = new PurchaseItem();
+                $item->purchase_id = $purchase->id;
+                $item->product_id = $product_ids[$i];
+                $item->quantity = $quantities[$i];
+                $item->price = $prices[$i];
+
+                $item->product->inventory->quantity += $item->quantity;
+                $item->product->inventory->save();
+                $item->save();
+            }
+
+            return redirect()->route('purchase.index')->with('notice', '進貨單修改成功');
+        }
+        catch(ValidationException $exception){
+            $validator = $exception->validator;
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
     }
 
     /**
@@ -121,8 +169,14 @@ class PurchaseController extends Controller
     public function destroy($id)
     {
         $purchase = Purchase::find($id);
-        if($purchase->purchaseItems)
+        if($purchase->purchaseItems){
+            foreach($purchase->purchaseItems as $item){
+                $item->product->inventory->quantity -= $item->quantity;
+                $item->product->inventory->save();
+            }
             $purchase->purchaseItems()->delete();
+        }
+
         $purchase->delete();
         return redirect()->route('purchase.index')->with('notice', '進貨單刪除成功！');
     }

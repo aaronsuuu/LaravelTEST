@@ -78,6 +78,7 @@
             products_option.products.forEach(element => {
                 slice += '<option value="'+element.id+'">'+element.name+'</option>';
             });
+            console.log(slice);
             $('#product_group').find('tbody').append('<tr><td class="col-1"><button type="button" class="btn btn-sm btn-danger item_btn">刪除</button></td><td class="col-5"><div class="form-group"><select class="form-control" name="product_id[]" required>'+slice+'</select></div></td><td class="col-3"><div class="form-group"><input type="number" class="form-control" name="price[]" required min="0"></div></td><td class="col-3"><div class="form-group"><input type="number" class="form-control" name="quantity[]" required min="1"></div></td></tr>');
         });
 
@@ -96,7 +97,7 @@
         });
 
         $('#supplier').change(function(){
-            $('#product_group').html('');
+            $('#product_group').find('tbody').html('');
             getProducts();
         });
 

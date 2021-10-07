@@ -1,7 +1,7 @@
 @extends('template.application')
 @section('main')
     <div class="container-fluid mx-2 my-2">
-        <h3 class="text-bold text-primary"><a href="{{route('supplier.index')}}">供應商管理</a> > 廠商資料</h3>
+        <h3 class="text-bold text-primary"><a href="{{route('purchase.index')}}">進貨管理</a> > 進貨單資料</h3>
         <hr>
         <div class="row">
             <div class="col-12">
@@ -17,37 +17,40 @@
                     @endforeach
                 @endif
 
-                <p><strong>名稱</strong> {{$supplier->name}}</p>
-                <p><strong>電話</strong> {{$supplier->phone}}</p>
-                <p><strong>地址</strong> {{$supplier->address}}</p>
-                {{-- <a href="{{route('product.create', ['supplier' => $supplier])}}" class="btn btn-sm btn-primary">新增產品</a> --}}
-                {{-- <table class="table table-striped table-hover">
-                    <thead class="table-primary">
+                <p><strong>名稱</strong> {{$purchase->supplier->name}}</p>
+                <p><strong>電話</strong> {{$purchase->supplier->phone}}</p>
+                <p><strong>地址</strong> {{$purchase->supplier->address}}</p>
+                <p><strong>進貨日期</strong> {{$purchase->date}}</p>
+                {{-- <a href="{{route('product.create', ['purchase' => $purchase])}}" class="btn btn-sm btn-primary">新增產品</a> --}}
+                <table class="table table-hover">
+                    <thead class="table-secondary">
                         <th>#</th>
-                        <th>名稱</th>
-                        <th>電話</th>
-                        <th>地址</th>
-                        <th>操作</th>
+                        <th>產品名稱</th>
+                        <th>價格</th>
+                        <th>數量</th>
+                        <th>金額</th>
                     </thead>
                     <tbody>
-                        @foreach ($suppliers as $supplier)
+                        @foreach ($purchase->purchaseItems as $item)
                             <tr>
                                 <td>{{$loop->index+1}}</td>
-                                <td><a href="{{route('supplier.show', ['supplier' => $supplier])}}">{{$supplier->name}}</a></td>
-                                <td>{{$supplier->phone}}</td>
-                                <td>{{$supplier->address}}</td>
-                                <td>
-                                    <a class="btn btn-warning btn-sm mx-1 my-1" href="{{ route('supplier.edit', $supplier) }}">編輯</a>
-                                    <form action="{{route('supplier.destroy', $supplier)}}" method="post" id="delete_form">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-danger btn-sm mx-1 my-1" type="submit">刪除</button>
-                                    </form>
-                                </td>
+                                <td>{{$item->product->name}}</td>
+                                <td>{{$item->price}}</td>
+                                <td>{{$item->quantity}}</td>
+                                <td>${{$item->price * $item->quantity}}</td>
                             </tr>
                         @endforeach
                     </tbody>
-                </table> --}}
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>總金額:{{$purchase->purchaseItems->sum('total_price')}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>

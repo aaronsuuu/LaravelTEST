@@ -26,7 +26,6 @@
                     <button type="button" class="btn btn-sm btn-primary" id="create_product">新增商品</button>
                     <button type="button" class="btn btn-sm btn-danger" id="remove_product">刪除商品</button>
                 </div>
-
                 <div class="form-group" id="product_group">
                     @foreach ($order->items as $item)
                         <div class="product my-2">
