@@ -1,3 +1,4 @@
+const { mix } = require('laravel-mix/src/File');
 const path = require('path');
 
 module.exports = {
@@ -7,3 +8,11 @@ module.exports = {
         },
     },
 };
+
+// mix.webpackConfig({
+//     resolve:{
+//         modules:[
+//             path.resolve(__dirname, '')
+//         ]
+//     }
+// });

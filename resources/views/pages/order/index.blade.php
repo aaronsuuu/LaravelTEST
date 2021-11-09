@@ -9,7 +9,7 @@
                 @endif
                 <a class="btn btn-sm btn-primary" href="{{ route('order.create') }}">新增訂單</a>
                 <hr>
-                <table class="table table-sm table-striped table-hover">
+                <table class="table table-sm table-striped table-hover" id="data_table">
                     <thead class="table-primary">
                         <th>#</th>
                         <th>訂貨日期</th>
@@ -50,12 +50,13 @@
 @endsection
 
 @section('scripts')
+    <script type="text/javascript">
+        $('#data_table').DataTable();
 
-    {{-- <script type="text/javascript">
-        $('.delete').click(()=>{
-            if(confirm('你確定要刪除這筆資料嗎?')){
-                $('.delete').find('form').submit();
-            }
-        })
-    </script> --}}
+        // $('.delete').click(()=>{
+        //     if(confirm('你確定要刪除這筆資料嗎?')){
+        //         $('.delete').find('form').submit();
+        //     }
+        // });
+    </script>
 @endsection

@@ -1151,21 +1151,17 @@ select {
 	margin-left: auto;
 	margin-right: auto;
 }
-.mx-5 {
-	margin-left: 1.25rem;
-	margin-right: 1.25rem;
-}
-.my-3 {
-	margin-top: 0.75rem;
-	margin-bottom: 0.75rem;
-}
-.my-1 {
-	margin-top: 0.25rem;
-	margin-bottom: 0.25rem;
+.mx-2 {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 }
 .my-2 {
 	margin-top: 0.5rem;
 	margin-bottom: 0.5rem;
+}
+.my-1 {
+	margin-top: 0.25rem;
+	margin-bottom: 0.25rem;
 }
 .mx-1 {
 	margin-left: 0.25rem;
